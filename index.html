@@ -30,6 +30,9 @@ body{font-family:-apple-system,"PingFang TC","Microsoft JhengHei","Noto Sans TC"
 .price-label{font-size:1.3em;color:var(--text-light)}
 .price-value{font-size:1.6em;font-weight:bold;color:var(--red)}
 .price-value.na{color:var(--text-light);font-size:1.3em}
+.source-link{display:block;text-align:right;margin-top:8px;font-size:0.75em;color:var(--text-light)}
+.source-link a{color:var(--gold-dark);text-decoration:none}
+.source-link a:hover{text-decoration:underline}
 .price-value .unit{font-size:0.65em;color:var(--text-light);font-weight:normal}
 .summary{background:linear-gradient(135deg,#388E3C,#4CAF50);color:#fff;border-radius:var(--radius);padding:20px;margin-bottom:16px;text-align:center;box-shadow:var(--shadow)}
 .summary h2{font-size:1.5em;margin-bottom:8px}
@@ -211,6 +214,7 @@ function render(){
         </div>
       </div>
       ${priceHtml}
+      <div class="source-link">來源：<a href="${s.url}" target="_blank" onclick="event.stopPropagation()">${s.name}官網</a></div>
     `;
     card.style.cursor='pointer';
     card.onclick=()=>window.open(s.url,'_blank');
