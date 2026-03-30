@@ -1,0 +1,54 @@
+{
+  "last_updated": "2026-03-30",
+  "update_time": "09:00",
+  "shops": [
+    {
+      "name": "周生生",
+      "name_en": "Chow Sang Sang",
+      "logo": "🔶",
+      "url": "https://www.chowsangsang.com/tc/gold-price",
+      "gold_sell": 50610,
+      "gold_buy": null,
+      "gold_bar_sell": null,
+      "gold_bar_buy": null,
+      "platinum_sell": null,
+      "notes": "另收2%佣金"
+    },
+    {
+      "name": "周大福",
+      "name_en": "Chow Tai Fook",
+      "logo": "💎",
+      "url": "https://www.chowtaifook.com/zh-hk/eshop/realtime-gold-price.html",
+      "gold_sell": 50610,
+      "gold_buy": null,
+      "gold_bar_sell": null,
+      "gold_bar_buy": null,
+      "platinum_sell": null,
+      "notes": "另收2%佣金"
+    },
+    {
+      "name": "六福",
+      "name_en": "Luk Fook",
+      "logo": "🏮",
+      "url": "https://www.lukfookeshop.com.hk/每日金價",
+      "gold_sell": 50020,
+      "gold_buy": 40520,
+      "gold_bar_sell": 45010,
+      "gold_bar_buy": 41050,
+      "platinum_sell": 22320,
+      "notes": "另收2%佣金"
+    },
+    {
+      "name": "英皇",
+      "name_en": "Emperor",
+      "logo": "👑",
+      "url": "https://www.emperorwatchjewellery.com/zh/gold-price/",
+      "gold_sell": 54920,
+      "gold_buy": 44440,
+      "gold_bar_sell": 49480,
+      "gold_bar_buy": 45130,
+      "platinum_sell": 24320,
+      "notes": "另收2%佣金"
+    }
+  ]
+}

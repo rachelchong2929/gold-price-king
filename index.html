@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0">
+<title>金價王 — 今日香港金價比較</title>
+<meta name="description" content="每日更新香港四大金行金價比較：周生生、周大福、六福、英皇。大字體長者友善介面。">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#FFF8E1;--card:#FFFFFF;--gold:#D4A017;--gold-dark:#B8860B;--text:#333;--text-light:#666;--red:#D32F2F;--green:#388E3C;--shadow:0 4px 16px rgba(0,0,0,0.1);--radius:16px}
+body{font-family:-apple-system,"PingFang TC","Microsoft JhengHei","Noto Sans TC",sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:0;line-height:1.6}
+.container{max-width:600px;margin:0 auto;padding:16px}
+/* Header */
+.header{text-align:center;padding:24px 16px 16px;background:linear-gradient(135deg,#D4A017 0%,#F5D061 50%,#D4A017 100%);border-radius:0 0 24px 24px;margin-bottom:20px;box-shadow:var(--shadow)}
+.header h1{font-size:2.4em;color:#fff;text-shadow:2px 2px 4px rgba(0,0,0,0.3);margin-bottom:4px;letter-spacing:2px}
+.header .subtitle{font-size:1.1em;color:rgba(255,255,255,0.9)}
+.header .date{font-size:1.3em;color:#fff;font-weight:bold;margin-top:8px;background:rgba(0,0,0,0.15);display:inline-block;padding:6px 20px;border-radius:30px}
+/* Font size control */
+.font-controls{display:flex;justify-content:center;gap:12px;margin-bottom:16px}
+.font-btn{font-size:1.3em;padding:10px 20px;border:2px solid var(--gold);background:#fff;color:var(--gold-dark);border-radius:12px;cursor:pointer;font-weight:bold;min-width:60px}
+.font-btn.active{background:var(--gold);color:#fff}
+.font-btn:active{transform:scale(0.95)}
+/* Cards */
+.shop-card{background:var(--card);border-radius:var(--radius);padding:20px;margin-bottom:16px;box-shadow:var(--shadow);border-left:6px solid var(--gold);transition:transform 0.2s}
+.shop-card.lowest{border-left-color:var(--green);background:#f0faf0}
+.shop-card.lowest .tag{display:inline-block;background:var(--green);color:#fff;font-size:0.9em;padding:3px 12px;border-radius:20px;margin-left:8px}
+.shop-header{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.shop-logo{font-size:2em}
+.shop-name{font-size:1.8em;font-weight:bold;color:var(--text)}
+.shop-en{font-size:0.85em;color:var(--text-light)}
+/* Price row */
+.price-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px dashed #e0d5b5}
+.price-row:last-child{border-bottom:none}
+.price-label{font-size:1.3em;color:var(--text-light)}
+.price-value{font-size:1.6em;font-weight:bold;color:var(--red)}
+.price-value.buy{color:var(--green)}
+.price-value .unit{font-size:0.65em;color:var(--text-light);font-weight:normal}
+/* Summary bar */
+.summary{background:linear-gradient(135deg,#388E3C,#4CAF50);color:#fff;border-radius:var(--radius);padding:20px;margin-bottom:16px;text-align:center;box-shadow:var(--shadow)}
+.summary h2{font-size:1.5em;margin-bottom:8px}
+.summary .best{font-size:2em;font-weight:bold}
+.summary .detail{font-size:1.1em;margin-top:6px;opacity:0.9}
+/* Note */
+.note{text-align:center;color:var(--text-light);font-size:1em;padding:16px;line-height:1.8}
+.note a{color:var(--gold-dark);text-decoration:none;font-weight:bold}
+/* Footer */
+.footer{text-align:center;padding:20px;color:#999;font-size:0.9em}
+/* Refresh button */
+.refresh-btn{display:block;width:100%;padding:16px;font-size:1.4em;background:var(--gold);color:#fff;border:none;border-radius:var(--radius);cursor:pointer;font-weight:bold;margin-bottom:16px;box-shadow:var(--shadow)}
+.refresh-btn:active{transform:scale(0.98);background:var(--gold-dark)}
+/* Tab for gold type */
+.tabs{display:flex;gap:8px;margin-bottom:16px;justify-content:center}
+.tab-btn{font-size:1.2em;padding:10px 20px;border:2px solid var(--gold);background:#fff;color:var(--gold-dark);border-radius:12px;cursor:pointer;font-weight:bold;flex:1;text-align:center}
+.tab-btn.active{background:var(--gold);color:#fff}
+/* Responsive large text */
+.size-large .shop-name{font-size:2.2em}
+.size-large .price-label{font-size:1.5em}
+.size-large .price-value{font-size:1.9em}
+.size-large .shop-logo{font-size:2.5em}
+.size-xlarge .shop-name{font-size:2.6em}
+.size-xlarge .price-label{font-size:1.8em}
+.size-xlarge .price-value{font-size:2.2em}
+.size-xlarge .shop-logo{font-size:3em}
+/* Loading */
+.loading{text-align:center;padding:40px;font-size:1.5em;color:var(--gold-dark)}
+</style>
+</head>
+<body>
+<div class="header">
+<h1>👑 金價王</h1>
+<div class="subtitle">香港四大金行 · 今日金價比較</div>
+<div class="date" id="dateDisplay">載入中...</div>
+</div>
+<div class="container">
+
+<!-- Font size -->
+<div class="font-controls">
+<button class="font-btn" data-size="normal" onclick="setSize('normal')">標準字</button>
+<button class="font-btn active" data-size="large" onclick="setSize('large')">大字</button>
+<button class="font-btn" data-size="xlarge" onclick="setSize('xlarge')">特大字</button>
+</div>
+
+<!-- Gold type tabs -->
+<div class="tabs">
+<button class="tab-btn active" data-type="ornament" onclick="setType('ornament')">飾金</button>
+<button class="tab-btn" data-type="bar" onclick="setType('bar')">金粒/金條</button>
+</div>
+
+<!-- Summary -->
+<div class="summary" id="summary">
+<h2>📢 今日最平</h2>
+<div class="best" id="bestShop">載入中...</div>
+<div class="detail" id="bestDetail"></div>
+</div>
+
+<!-- Shop cards -->
+<div id="shopCards">
+<div class="loading">⏳ 載入金價中...</div>
+</div>
+
+<!-- Refresh -->
+<button class="refresh-btn" onclick="loadData()">🔄 重新載入金價</button>
+
+<div class="note">
+⚠️ 以上金價另需加 <strong>2%佣金</strong><br>
+金價每日浮動，以金行實際報價為準<br>
+每日早上9時自動更新<br><br>
+<a href="javascript:void(0)" onclick="showInfo()">ℹ️ 金價小知識</a>
+</div>
+
+<div class="footer">
+金價王 © 2026 · 數據來源：各金行官網
+</div>
+</div>
+
+<!-- Info modal -->
+<div id="infoModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:999;justify-content:center;align-items:center">
+<div style="background:#fff;border-radius:20px;padding:24px;margin:20px;max-width:500px;max-height:80vh;overflow-y:auto;font-size:1.2em;line-height:1.8">
+<h2 style="color:#D4A017;margin-bottom:12px">📖 金價小知識</h2>
+<p><strong>一両 = 37.429 克</strong></p>
+<p>香港金行用「両」計價，即係「司馬両」。</p>
+<br>
+<p><strong>飾金 vs 金粒/金條</strong></p>
+<p>飾金 = 做好嘅金飾，價格較貴（因為有手工費）<br>
+金粒/金條 = 純投資用途，價格較平</p>
+<br>
+<p><strong>賣出價 vs 買入價</strong></p>
+<p>賣出價 = 你買金要俾嘅價錢<br>
+買入價 = 你賣金返俾金行嘅價錢</p>
+<br>
+<p><strong>佣金</strong></p>
+<p>所有金行買賣飾金都要另外收2%佣金。</p>
+<br>
+<button onclick="closeInfo()" style="width:100%;padding:14px;font-size:1.2em;background:#D4A017;color:#fff;border:none;border-radius:12px;cursor:pointer;font-weight:bold">✅ 明白了</button>
+</div>
+</div>
+
+<script>
+let data=null;
+let curType='ornament';
+let curSize=localStorage.getItem('goldKingSize')||'large';
+
+function setSize(s){
+  curSize=s;
+  localStorage.setItem('goldKingSize',s);
+  document.body.className=s==='normal'?'':'size-'+s;
+  document.querySelectorAll('.font-btn').forEach(b=>b.classList.toggle('active',b.dataset.size===s));
+}
+
+function setType(t){
+  curType=t;
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active',b.dataset.type===t));
+  render();
+}
+
+function showInfo(){document.getElementById('infoModal').style.display='flex'}
+function closeInfo(){document.getElementById('infoModal').style.display='none'}
+
+function fmtPrice(v){
+  if(!v&&v!==0)return'—';
+  return'$'+v.toLocaleString('en-US');
+}
+
+function render(){
+  if(!data)return;
+  const shops=data.shops;
+  // Find lowest sell
+  let lowestSell=Infinity,lowestName='';
+  shops.forEach(s=>{
+    const sell=curType==='ornament'?s.gold_sell:s.gold_bar_sell;
+    if(sell&&sell<lowestSell){lowestSell=sell;lowestName=s.name;}
+  });
+
+  // Summary
+  document.getElementById('bestShop').textContent=lowestName+' '+fmtPrice(lowestSell)+'/両';
+  const diff=[];
+  shops.forEach(s=>{
+    const sell=curType==='ornament'?s.gold_sell:s.gold_bar_sell;
+    if(sell&&s.name!==lowestName)diff.push(s.name+' 貴 '+fmtPrice(sell-lowestSell));
+  });
+  document.getElementById('bestDetail').textContent=diff.join(' · ')||'各金行價格相同';
+
+  // Cards
+  const container=document.getElementById('shopCards');
+  container.innerHTML='';
+  // Sort by sell price
+  const sorted=[...shops].sort((a,b)=>{
+    const sa=curType==='ornament'?a.gold_sell:a.gold_bar_sell;
+    const sb=curType==='ornament'?b.gold_sell:b.gold_bar_sell;
+    return(sa||999999)-(sb||999999);
+  });
+
+  sorted.forEach((s,i)=>{
+    const sell=curType==='ornament'?s.gold_sell:s.gold_bar_sell;
+    const buy=curType==='ornament'?s.gold_buy:s.gold_bar_buy;
+    const isLowest=sell===lowestSell;
+    const card=document.createElement('div');
+    card.className='shop-card'+(isLowest?' lowest':'');
+    card.innerHTML=`
+      <div class="shop-header">
+        <span class="shop-logo">${s.logo}</span>
+        <div>
+          <span class="shop-name">${s.name}</span>${isLowest?'<span class="tag">✅ 最平</span>':''}
+          <div class="shop-en">${s.name_en}</div>
+        </div>
+      </div>
+      <div class="price-row">
+        <span class="price-label">📤 賣出價</span>
+        <span class="price-value">${fmtPrice(sell)} <span class="unit">/両</span></span>
+      </div>
+      ${buy?`<div class="price-row">
+        <span class="price-label">📥 買入價</span>
+        <span class="price-value buy">${fmtPrice(buy)} <span class="unit">/両</span></span>
+      </div>`:''}
+      ${sell&&buy?`<div class="price-row">
+        <span class="price-label">📊 差價</span>
+        <span class="price-value" style="color:var(--text)">${fmtPrice(sell-buy)} <span class="unit">/両</span></span>
+      </div>`:''}
+    `;
+    // Tap to open official site
+    card.style.cursor='pointer';
+    card.onclick=()=>window.open(s.url,'_blank');
+    container.appendChild(card);
+  });
+}
+
+async function loadData(){
+  try{
+    const r=await fetch('data/prices.json?t='+Date.now());
+    data=await r.json();
+    document.getElementById('dateDisplay').textContent='📅 '+data.last_updated+' 更新';
+    render();
+  }catch(e){
+    document.getElementById('shopCards').innerHTML='<div class="loading">❌ 載入失敗，請稍後再試</div>';
+  }
+}
+
+// Init
+setSize(curSize);
+loadData();
+</script>
+</body>
+</html>
