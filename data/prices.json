@@ -1,13 +1,13 @@
 {
-  "last_updated": "2026-03-30",
-  "update_time": "22:16",
+  "last_updated": "2026-04-04",
+  "update_time": "09:01",
   "shops": [
     {
       "name": "周生生",
       "name_en": "Chow Sang Sang",
       "logo": "🔶",
       "url": "https://www.chowsangsang.com/tc/gold-price",
-      "gold_sell": 50240,
+      "gold_sell": null,
       "gold_bar_sell": null
     },
     {
@@ -15,7 +15,7 @@
       "name_en": "Chow Tai Fook",
       "logo": "💎",
       "url": "https://www.chowtaifook.com/zh-hk/eshop/realtime-gold-price.html",
-      "gold_sell": 50240,
+      "gold_sell": null,
       "gold_bar_sell": null
     },
     {
@@ -23,16 +23,16 @@
       "name_en": "Luk Fook",
       "logo": "🏮",
       "url": "https://www.lukfookeshop.com.hk/每日金價",
-      "gold_sell": 51440,
-      "gold_bar_sell": 45900
+      "gold_sell": 52700,
+      "gold_bar_sell": 47235
     },
     {
       "name": "英皇",
       "name_en": "Emperor",
       "logo": "👑",
       "url": "https://www.emperorwatchjewellery.com/zh/gold-price/",
-      "gold_sell": 51440,
-      "gold_bar_sell": 45900
+      "gold_sell": 52700,
+      "gold_bar_sell": 47235
     }
   ]
 }
