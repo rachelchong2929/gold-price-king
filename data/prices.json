@@ -1,6 +1,6 @@
 {
   "last_updated": "2026-04-07",
-  "update_time": "09:30",
+  "update_time": "09:33",
   "shops": [
     {
       "name": "六福",
@@ -32,8 +32,7 @@
       "logo": "💎",
       "url": "https://www.chowtaifook.com/zh-hk/eshop/realtime-gold-price.html",
       "gold_sell": 52310,
-      "gold_bar_sell": null,
-      "notes": "來源：goldpricehk.com (官網被CloudFront擋住)"
+      "gold_bar_sell": null
     }
   ]
 }
