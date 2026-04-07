@@ -226,7 +226,8 @@ async function loadData(){
   try{
     const r=await fetch('data/prices.json?t='+Date.now());
     data=await r.json();
-    document.getElementById('dateDisplay').textContent='📅 '+data.last_updated+' 更新';
+    const timeStr=data.update_time?' '+data.update_time:'';
+    document.getElementById('dateDisplay').textContent='📅 '+data.last_updated+timeStr+' 更新';
     render();
   }catch(e){
     document.getElementById('shopCards').innerHTML='<div class="loading">❌ 載入失敗，請稍後再試</div>';
