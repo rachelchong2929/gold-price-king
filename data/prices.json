@@ -1,22 +1,22 @@
 {
-  "last_updated": "2026-04-08",
-  "update_time": "09:08",
+  "last_updated": "2026-04-11",
+  "update_time": "09:00",
   "shops": [
     {
       "name": "六福",
       "name_en": "Luk Fook",
       "logo": "🏮",
       "url": "https://www.lukfookeshop.com.hk/每日金價",
-      "gold_sell": 52288,
-      "gold_bar_sell": 46674
+      "gold_sell": 53598,
+      "gold_bar_sell": 48321
     },
     {
       "name": "英皇",
       "name_en": "Emperor",
       "logo": "👑",
       "url": "https://www.emperorwatchjewellery.com/zh/gold-price/",
-      "gold_sell": 52288,
-      "gold_bar_sell": 46936
+      "gold_sell": 53598,
+      "gold_bar_sell": 48059
     },
     {
       "name": "周生生",
